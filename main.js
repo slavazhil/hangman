@@ -30,16 +30,12 @@ function enableButtons() {
     }
 }
 
-function getName() {
+function start() {
     name = document.getElementById("name").value;
     if (name === "") {
         alert("Error! Name can't be empty.")
         return;
     }
-}
-
-function start() {
-    getName();
     document.getElementById("welcome").style.display = "none";
     document.getElementById("game").style.display = "block";
     nextWord();
@@ -56,8 +52,6 @@ function nextWord() {
 
 function generateWord() {
     let index = Math.round(Math.random() * (words.length - 1));
-    //word = words.splice(index, 1)[0].split("");
-    //word_def = words_defs.splice(index, 1)[0];
     word = words[index].split("");
     word_def = words_defs[index];
     word_array = [];
