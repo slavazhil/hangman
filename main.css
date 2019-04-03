@@ -26,7 +26,7 @@ h1, h2, h3, h4, h5, h6 {
 
 button, input {
     font-size: 20px;
-    padding: 15px;
+    padding: 10px 15px;
     margin: 10px;
     cursor: pointer;
     border: 1px solid black;
