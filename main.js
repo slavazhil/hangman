@@ -11,8 +11,46 @@ let words_defs = ["A group of people appointed for a specific function.",
                 "The armed forces of a country.",
                 "Harmful and unpleasant."]
 
+// Initialize Firebase
+let config = {
+    apiKey: 'AIzaSyABp9GHFXn05GqA_HdqKCFitFYUxFxMn-A',
+    authDomain: 'hangman-41c86.firebaseapp.com',
+    databaseURL: 'https://hangman-41c86.firebaseio.com',
+    projectId: 'hangman-41c86',
+    storageBucket: 'hangman-41c86.appspot.com',
+    messagingSenderId: '173410728369'
+};
 
+firebase.initializeApp(config);
 
+function savePlayerScoreToDB(name, score) {
+    firebase.database().ref(name).set(score);
+}
+
+function getPlayersFromDB() {
+    let board = ""
+    let isNameInLeaderboard = false;
+
+    firebase.database().ref().orderByValue().limitToLast(5).once('value', function(snapshot) {
+        snapshot.forEach(function(data) {
+            board = `${data.key}: ${data.val()}<br>` + board;
+            if (name == data.key) {
+                isNameInLeaderboard = true;
+            }
+        });
+
+        if (!isNameInLeaderboard) {
+            board += `${name}: ${score}<br>`;
+        }
+        
+        document.getElementById('leaderboard').innerHTML = board;
+    });
+
+    
+    
+}
+
+getPlayersFromDB();
 
 function addButtons() {
     for (let i = 0; i < 26; i++) {
@@ -118,7 +156,8 @@ function isGameOver() {
         document.getElementById("gif").style.display = "block";
         document.getElementById("gif").src = "";
         document.getElementById("gif").src = "game_over.gif";
-        document.getElementById("result").innerHTML = name + ": " + score;
+        savePlayerScoreToDB(name, score);
+        getPlayersFromDB();
         setTimeout(function(){
             document.getElementById("gif").style.display = "none";
             document.getElementById("game_over").style.display = "block";

@@ -16,7 +16,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: lightgrey;
+    background-color: #f1f1f1;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -26,7 +26,8 @@ h1, h2, h3, h4, h5, h6 {
 
 button, input {
     font-size: 20px;
-    padding: 5px;
+    padding: 15px;
+    margin: 10px;
     cursor: pointer;
     border: 1px solid black;
 }
@@ -63,3 +64,6 @@ button, input {
     left: 10px;
 }
 
+#game {
+    max-width: 960px;
+}
