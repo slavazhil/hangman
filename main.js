@@ -24,10 +24,12 @@ let config = {
 firebase.initializeApp(config);
 
 function savePlayerScoreToDB(name, score) {
+    // save player score to database
     firebase.database().ref(name).set(score);
 }
 
 function getPlayersFromDB() {
+    // get first five scores from database 
     let board = ""
     let isNameInLeaderboard = false;
 
@@ -50,9 +52,8 @@ function getPlayersFromDB() {
     
 }
 
-getPlayersFromDB();
-
 function addButtons() {
+    // add buttons dynamically in alphabetic order
     for (let i = 0; i < 26; i++) {
         let button = document.createElement("button");
         button.onclick = function(){checkLetter(this.innerHTML)};
@@ -62,6 +63,7 @@ function addButtons() {
 }
 
 function enableButtons() {
+    // reset all buttons to 'active'
     let buttons = document.getElementsByTagName("button");
     for (let i = 0; i < buttons.length; i++) {
             buttons[i].disabled = false;
@@ -69,6 +71,7 @@ function enableButtons() {
 }
 
 function start() {
+    // start the game
     name = document.getElementById("name").value;
     if (name === "") {
         alert("Error! Name can't be empty.")
@@ -82,6 +85,7 @@ function start() {
 }
 
 function nextWord() {
+    // show the next word
     enableButtons();
     generateWord();
     updateWord();
@@ -89,6 +93,7 @@ function nextWord() {
 }
 
 function generateWord() {
+    // generate a new word
     let index = Math.round(Math.random() * (words.length - 1));
     word = words[index].split("");
     word_def = words_defs[index];
@@ -100,20 +105,24 @@ function generateWord() {
 }
 
 function resetScoreAndLives() {
+    // reset score and lives
     score = 0;
     lives = 7;
 }
 
 function updateScoreAndLives() {
+    // update score and lives
     document.getElementById("score").innerHTML = "Score: " + score;
     document.getElementById("lives").innerHTML = "Lives: " + lives;
 }
 
 function updateWord() {
+    // update the word
     document.getElementById("word").innerHTML = word_array.join(" ");
 }
 
 function checkLetter(letter) {
+    // check if letter is in the word
     let isLetterInWord = false;
     for (let i = 0; i < word.length; i++) {
         if (word[i] === letter) {
@@ -134,6 +143,7 @@ function checkLetter(letter) {
 }
 
 function isWordGuessed() {
+    // check if the word is guessed
     if (!word_array.includes("_")){
         console.log("Good job!");
         nextWord();
@@ -141,6 +151,7 @@ function isWordGuessed() {
 }
 
 function disableButton(letter) {
+    // disable a button when clicked
     let buttons = document.getElementsByTagName("button");
     for (let i = 0; i < buttons.length; i++) {
         if (buttons[i].innerHTML === letter){
@@ -151,6 +162,7 @@ function disableButton(letter) {
 }
 
 function isGameOver() {
+    // display game-over if life is 0
     if (lives === 0) {
         document.getElementById("game").style.display = "none";
         document.getElementById("gif").style.display = "block";
@@ -166,6 +178,7 @@ function isGameOver() {
 }
 
 function restart() {
+    // restart the game
     resetScoreAndLives();
     updateScoreAndLives();
     nextWord();
@@ -174,6 +187,7 @@ function restart() {
 }
 
 function initialize() {
+    // initialize the game
     addButtons();
     document.getElementById("welcome").style.display = "block";
 }
